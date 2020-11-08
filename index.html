@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Compliments Button</title>
+		<meta charset=utf-8>
+		<style>
+			* {
+				color: #202122;
+				font-weight: bold;
+			}
+
+			body {
+				background-size: cover;
+				background-position: center;
+				background-color: #a2a9b1; /* to avoid a glaring white while the background-image hasn’t loaded */
+			}
+
+			article {
+				position: relative; /* make this a containing block for the footer */
+				margin: 40px;
+				padding: 16px;
+				box-sizing: border-box;
+				height: calc(100vh - 2*40px);
+				background: rgba(255, 255, 255, 75%);
+			}
+
+			h1 {
+				margin-block: 0 8px;
+				font-size: 36px;
+				line-height: 42px;
+			}
+
+			p {
+				margin-block: 0;
+				font-size: 16px;
+				line-height: 21px;
+			}
+
+			button {
+				display: block;
+				margin-block: 40px;
+				margin-inline: auto;
+				padding-block: 10px;
+				padding-inline: 17px;
+				font-size: 16px;
+				line-height: 20px;
+				color: #fff;
+				background-color: #36C;
+				border: none;
+			}
+
+			footer {
+				position: absolute;
+				inset-block-end: 0;
+				inset-inline-end: 0;
+				font-weight: normal;
+				text-align: end;
+				font-size: 12px;
+				line-height: 16px;
+			}
+
+			footer div { /* sometimes the extmetadata contains <div>s */
+				display: inline-block;
+			}
+		</style>
+	</head>
+	<body>
+		<article>
+			<h1>Dear NAME,</h1>
+			<p>
+				have a compliment!
+			</p>
+			<button type=button>
+				Get a compliment
+			</button>
+			<footer id=attribution>
+				<!-- set by JavaScript -->
+			</footer>
+		</article>
+		<script>
+			async function pictureOfTheDay() {
+				const date = new Date();
+				const wikitext = `{{Potd/${date.toISOString().substring(0, 10)}}}`;
+				const url = new URL('https://commons.wikimedia.org/w/api.php');
+				url.searchParams.set('action', 'parse');
+				url.searchParams.set('text', wikitext);
+				url.searchParams.set('contentmodel', 'wikitext');
+				url.searchParams.set('prop', 'text');
+				url.searchParams.set('wrapoutputclass', '');
+				url.searchParams.set('disablelimitreport', '');
+				url.searchParams.set('format', 'json');
+				url.searchParams.set('formatversion', '2');
+				url.searchParams.set('origin', '*');
+				try {
+					const response = await fetch(url);
+					const { parse: { text: html } } = await response.json();
+					return html.replace(/^<p>([^]*)\n<\/p>$/, '$1').replace(/ /g, '_');
+				} catch {
+					return null;
+				}
+			}
+
+			async function getAttribution(fileTitle) {
+				const filePage = `https://commons.wikimedia.org/wiki/File:${encodeURIComponent(fileTitle)}`;
+				const url = new URL('https://commons.wikimedia.org/w/api.php');
+				url.searchParams.set('action', 'query');
+				url.searchParams.set('titles', `File:${fileTitle}`);
+				url.searchParams.set('prop', 'imageinfo');
+				url.searchParams.set('iiprop', 'extmetadata');
+				url.searchParams.set('format', 'json');
+				url.searchParams.set('formatversion', '2');
+				url.searchParams.set('origin', '*');
+				try {
+					const response = await fetch(url);
+					const { query: { pages: [ { imageinfo: [ { extmetadata } ] } ] } } = await response.json();
+					const { Artist, ObjectName, LicenseShortName, LicenseUrl } = extmetadata;
+					const license = LicenseUrl // undefined for public domain files
+						? `<a href="${LicenseUrl.value}">${LicenseShortName.value}</a>`
+						: LicenseShortName.value;
+					return `${Artist.value},
+<a href="${filePage}">${ObjectName.value}</a>,
+${license},
+via Wikimedia Commons`;
+				} catch (e) {
+					console.error('Could not get proper attribution:', e);
+					return `<a href="${filePage}">${fileTitle}</a>`;
+				}
+			}
+
+			async function loadBackground() {
+				const fileTitle = await pictureOfTheDay();
+				if (!fileTitle) {
+					return;
+				}
+
+				document.body.style.backgroundImage
+					= `url("https://commons.wikimedia.org/wiki/Special:Redirect/file/${fileTitle.replace(/"/g, '\\"')}")`;
+				document.getElementById('attribution').innerHTML = await getAttribution(fileTitle);
+			}
+
+			loadBackground().catch(console.error);
+			</script>
+	</body>
+</html>
