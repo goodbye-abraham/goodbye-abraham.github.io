@@ -60,8 +60,15 @@
 				text-align: center;
 			}
 
-			blockquote img {
+			blockquote > * {
+				background: #fff;
+			}
+
+			blockquote figure {
+				background: #fff;
 				margin-block: 24px;
+				margin-inline: 0;
+				line-height: 0;
 			}
 
 			footer {
@@ -176,7 +183,8 @@ via Wikimedia Commons`;
 
 			const complimentContainer = document.getElementById('complimentContainer');
 			let complimentText = null,
-				complimentImage = null;
+				complimentImageFigure = null,
+				complimentImageImg = null;
 
 			function applyCompliment(compliment) {
 				if (compliment.text) {
@@ -195,17 +203,20 @@ via Wikimedia Commons`;
 				}
 
 				if (compliment.image) {
-					if (complimentImage === null) {
-						complimentImage = document.createElement('img');
+					if (complimentImageFigure === null) {
+						complimentImageFigure = document.createElement('figure');
+						complimentImageImg = document.createElement('img');
+						complimentImageFigure.append(complimentImageImg);
 					} else {
-						complimentImage.remove();
+						complimentImageFigure.remove();
 					}
-					complimentContainer.append(complimentImage);
-					complimentImage.src = compliment.image;
+					complimentContainer.append(complimentImageFigure);
+					complimentImageImg.src = compliment.image;
 				} else {
-					if (complimentImage !== null) {
-						complimentImage.remove();
-						complimentImage = null;
+					if (complimentImageFigure !== null) {
+						complimentImageFigure.remove();
+						complimentImageFigure = null;
+						complimentImageImg = null;
 					}
 				}
 			}
