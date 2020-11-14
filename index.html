@@ -52,6 +52,16 @@
 				color: #fff;
 				background-color: #36C;
 				border: none;
+				cursor: pointer;
+			}
+
+			blockquote {
+				margin: 24px;
+				text-align: center;
+			}
+
+			blockquote img {
+				margin-block: 24px;
 			}
 
 			footer {
@@ -75,9 +85,13 @@
 			<p>
 				have a compliment!
 			</p>
-			<button type=button>
+			<button type=button id=complimentButton>
 				Get a compliment
 			</button>
+			<!-- TODO spec demands no margin collapsing between button and compliment -->
+			<blockquote id=complimentContainer>
+				<!-- filled by JavaScript -->
+			</blockquote>
 			<footer id=attribution>
 				<!-- set by JavaScript -->
 			</footer>
@@ -146,6 +160,55 @@ via Wikimedia Commons`;
 			}
 
 			loadBackground().catch(console.error);
+
+			const compliments = [
+				{
+					text: 'Here goes the text for a short compliment.',
+				},
+				{
+					text: 'Here goes the text for a very long compliment that spans multiple lines and talks about how great NAME is.',
+					image: 'Placeholder.png',
+				},
+			];
+
+			const complimentContainer = document.getElementById('complimentContainer');
+			let complimentText = null,
+				complimentImage = null;
+
+			function applyCompliment(compliment) {
+				if (compliment.text) {
+					if (complimentText === null) {
+						complimentText = document.createElement('p');
+						complimentContainer.append(complimentText);
+					}
+					complimentText.textContent = compliment.text;
+				} else {
+					if (complimentText !== null) {
+						complimentText.remove();
+						complimentText = null;
+					}
+				}
+
+				if (compliment.image) {
+					if (complimentImage === null) {
+						complimentImage = document.createElement('img');
+						complimentContainer.append(complimentImage);
+					}
+					complimentImage.src = compliment.image;
+				} else {
+					if (complimentImage !== null) {
+						complimentImage.remove();
+						complimentImage = null;
+					}
+				}
+			}
+
+			function applyRandomCompliment() {
+				const compliment = compliments[Math.floor(Math.random() * compliments.length)];
+				applyCompliment(compliment);
+			}
+
+			document.getElementById('complimentButton').addEventListener('click', applyRandomCompliment);
 			</script>
 	</body>
 </html>
