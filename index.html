@@ -64,11 +64,33 @@
 				background: #fff;
 			}
 
-			blockquote figure {
+			figure {
 				background: #fff;
 				margin-block: 24px;
 				margin-inline: 0;
 				line-height: 0;
+			}
+
+			figure.audio {
+				padding-block: 24px;
+			}
+
+			button.play {
+				display: block;
+				width: 120px;
+				height: 120px;
+				margin-block-start: 16px;
+				margin-inline: auto;
+				background: url("Toicon-icon-fandom-play.svg") center/100%;
+				border: none;
+				cursor: pointer;
+			}
+
+			button.play:active {
+				width: 104px;
+				height: 104px;
+				margin-block-start: calc(16px + (120px - 104px)/2);
+				margin-block-end: calc((120px - 104px)/2); /* so the whole button still has the same height */
 			}
 
 			footer {
@@ -179,12 +201,20 @@ via Wikimedia Commons`;
 				{
 					image: 'Placeholder.png',
 				},
+				{
+					audio: 'LL-Q188_(deu)-Sebastian_Wallroth-Beispiel.wav',
+				},
 			];
 
 			const complimentContainer = document.getElementById('complimentContainer');
 			let complimentText = null,
 				complimentImageFigure = null,
-				complimentImageImg = null;
+				complimentImageImg = null,
+				complimentAudioFigure = null,
+				complimentAudioFigcaption = null,
+				complimentAudioFigcaptionP = null,
+				complimentAudioButton = null,
+				complimentAudioAudio = null;
 
 			function applyCompliment(compliment) {
 				if (compliment.text) {
@@ -205,6 +235,7 @@ via Wikimedia Commons`;
 				if (compliment.image) {
 					if (complimentImageFigure === null) {
 						complimentImageFigure = document.createElement('figure');
+						complimentImageFigure.classList.add('image');
 						complimentImageImg = document.createElement('img');
 						complimentImageFigure.append(complimentImageImg);
 					} else {
@@ -219,6 +250,38 @@ via Wikimedia Commons`;
 						complimentImageImg = null;
 					}
 				}
+
+				if (compliment.audio) {
+					if (complimentAudioFigure === null) {
+						complimentAudioFigure = document.createElement('figure');
+						complimentAudioFigure.classList.add('audio');
+						complimentAudioFigcaption = document.createElement('figcaption');
+						complimentAudioFigcaptionP = document.createElement('p');
+						complimentAudioFigcaptionP.textContent = 'Turn up your volume and click me to listen to the compliment.';
+						complimentAudioFigcaption.append(complimentAudioFigcaptionP);
+						complimentAudioButton = document.createElement('button');
+						complimentAudioButton.classList.add('play');
+						complimentAudioButton.addEventListener('click', playAudio);
+						complimentAudioFigure.append(complimentAudioFigcaption, complimentAudioButton);
+					} else {
+						complimentAudioFigure.remove();
+					}
+					complimentContainer.append(complimentAudioFigure);
+					complimentAudioAudio = new Audio(compliment.audio);
+				} else {
+					if (complimentAudioFigure !== null) {
+						complimentAudioFigure.remove();
+						complimentAudioFigure = null;
+						complimentAudioFigcaption = null;
+						complimentAudioButton = null;
+						complimentAudioAudio.pause();
+						complimentAudioAudio = null;
+					}
+				}
+			}
+
+			function playAudio() {
+				complimentAudioAudio.play();
 			}
 
 			let lastRandomCompliment = null;
