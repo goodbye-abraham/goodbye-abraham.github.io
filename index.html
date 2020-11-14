@@ -210,8 +210,13 @@ via Wikimedia Commons`;
 				}
 			}
 
+			let lastRandomCompliment = null;
 			function applyRandomCompliment() {
-				const compliment = compliments[Math.floor(Math.random() * compliments.length)];
+				let compliment;
+				do {
+					compliment = compliments[Math.floor(Math.random() * compliments.length)];
+				} while (compliment === lastRandomCompliment);
+				lastRandomCompliment = compliment;
 				applyCompliment(compliment);
 			}
 
