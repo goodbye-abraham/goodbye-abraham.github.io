@@ -193,7 +193,9 @@ via Wikimedia Commons`;
 				document.getElementById('attribution').innerHTML = await getAttribution(fileTitle);
 			}
 
-			loadBackground().catch(console.error);
+			loadBackground()
+				.then(preloadComplimentImages)
+				.catch(console.error);
 
 			const compliments = [
 				{
@@ -210,6 +212,24 @@ via Wikimedia Commons`;
 					audio: 'LL-Q188_(deu)-Sebastian_Wallroth-Beispiel.wav',
 				},
 			];
+
+			function preloadImage(image) {
+				const link = document.createElement('link');
+				link.href = image;
+				link.rel = 'preload';
+				link.as = 'image';
+				document.head.append(link);
+			}
+
+			function preloadComplimentImages() {
+				for (const compliment of compliments) {
+					if (compliment.image) {
+						preloadImage(compliment.image);
+					}
+					// we don’t preload audio – the browser preloads that as soon as we create the new Audio(),
+					// that’s early enough (there’s a delay before the human clicks the “play” button)
+				}
+			}
 
 			const complimentContainer = document.getElementById('complimentContainer');
 			let complimentText = null,
