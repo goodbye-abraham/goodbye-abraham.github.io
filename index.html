@@ -20,11 +20,14 @@
 			}
 
 			article {
-				position: relative; /* make this a containing block for the footer */
+				display: flex;
+				flex-direction: column;
+				justify-content: space-between; /* space between <main> and <footer> */
 				margin: 40px;
 				padding: 16px;
 				box-sizing: border-box;
 				block-size: calc(100vh - 2*40px);
+				overflow-block: auto;
 				max-inline-size: 688px;
 				background: rgba(255, 255, 255, 75%);
 			}
@@ -98,12 +101,6 @@
 				margin-block-end: calc((120px - 104px)/2); /* so the whole button still has the same block size */
 			}
 
-			footer {
-				position: absolute;
-				inset-block-end: 0;
-				inset-inline-end: 0;
-			}
-
 			footer p,
 			footer p * {
 				font-weight: normal;
@@ -119,17 +116,19 @@
 	</head>
 	<body>
 		<article>
-			<h1>Dear NAME,</h1>
-			<p>
-				have a compliment!
-			</p>
-			<button type=button id=complimentButton class=primary>
-				Get a compliment
-			</button>
-			<!-- TODO spec demands no margin collapsing between button and compliment -->
-			<blockquote id=complimentContainer>
-				<!-- filled by JavaScript -->
-			</blockquote>
+			<main>
+				<h1>Dear NAME,</h1>
+				<p>
+					have a compliment!
+				</p>
+				<button type=button id=complimentButton class=primary>
+					Get a compliment
+				</button>
+				<!-- TODO spec demands no margin collapsing between button and compliment -->
+				<blockquote id=complimentContainer>
+					<!-- filled by JavaScript -->
+				</blockquote>
+			</main>
 			<footer>
 				<p>
 					Background image:
