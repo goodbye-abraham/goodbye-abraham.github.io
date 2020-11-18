@@ -13,10 +13,9 @@
 				background-size: cover;
 				background-position: center;
 				background-color: #a2a9b1; /* to avoid a glaring white while the background-image hasn’t loaded */
-				/* center the <article> (can’t use margin: auto because it already has a real margin) */
-				display: flex;
-				justify-content: center;
-				overflow: hidden; /* for some reason the display: flex causes overflow :( */
+				margin-inline: auto; /* horizontally center the <article> */
+				max-inline-size: max-content;
+				overflow-block: auto;
 			}
 
 			article {
@@ -26,8 +25,7 @@
 				margin: 40px;
 				padding: 16px;
 				box-sizing: border-box;
-				block-size: calc(100vh - 2*40px);
-				overflow-block: auto;
+				min-block-size: calc(100vh - 2*40px);
 				max-inline-size: 688px;
 				background: rgba(255, 255, 255, 75%);
 			}
