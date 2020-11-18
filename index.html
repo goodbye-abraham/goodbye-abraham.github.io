@@ -10,12 +10,20 @@
 			}
 
 			body {
-				background-size: cover;
-				background-position: center;
-				background-color: #a2a9b1; /* to avoid a glaring white while the background-image hasn’t loaded */
 				margin-inline: auto; /* horizontally center the <article> */
 				max-inline-size: max-content;
 				overflow-block: auto;
+			}
+
+			#background {
+				background-size: cover;
+				background-position: center;
+				background-color: #a2a9b1; /* to avoid a glaring white while the background-image hasn’t loaded */
+				position: fixed;
+				width: 100vw; /* use vw/vh, rather than 100%, to not be affected by <body>’s scrollbar, if any */
+				height: 100vh;
+				inset: 0;
+				z-index: -1;
 			}
 
 			article {
@@ -113,6 +121,7 @@
 		</style>
 	</head>
 	<body>
+		<div id=background></div>
 		<article>
 			<main>
 				<h1>Dear NAME,</h1>
@@ -199,7 +208,7 @@ via Wikimedia Commons`;
 					return;
 				}
 
-				document.body.style.backgroundImage
+				document.getElementById('background').style.backgroundImage
 					= `url("https://commons.wikimedia.org/wiki/Special:Redirect/file/${fileTitle.replace(/"/g, '\\"')}")`;
 				document.getElementById('attributionPictureOfTheDay').innerHTML = await getAttribution(fileTitle);
 			}
