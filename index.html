@@ -102,6 +102,10 @@
 				position: absolute;
 				inset-block-end: 0;
 				inset-inline-end: 0;
+			}
+
+			footer p,
+			footer p * {
 				font-weight: normal;
 				text-align: end;
 				font-size: 12px;
@@ -126,8 +130,18 @@
 			<blockquote id=complimentContainer>
 				<!-- filled by JavaScript -->
 			</blockquote>
-			<footer id=attribution>
-				<!-- set by JavaScript -->
+			<footer>
+				<p>
+					Background image:
+					<span id=attributionPictureOfTheDay>loading…</span>
+				</p>
+				<p>
+					Play button:
+					Carol Liao/toicon.com,
+					<a href="https://commons.wikimedia.org/wiki/File:Toicon-icon-fandom-play.svg">Toicon-icon-fandom-play.svg</a>,
+					<a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>,
+					via Wikimedia Commons
+				</p>
 			</footer>
 		</article>
 		<script>
@@ -190,7 +204,7 @@ via Wikimedia Commons`;
 
 				document.body.style.backgroundImage
 					= `url("https://commons.wikimedia.org/wiki/Special:Redirect/file/${fileTitle.replace(/"/g, '\\"')}")`;
-				document.getElementById('attribution').innerHTML = await getAttribution(fileTitle);
+				document.getElementById('attributionPictureOfTheDay').innerHTML = await getAttribution(fileTitle);
 			}
 
 			loadBackground()
