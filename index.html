@@ -80,7 +80,8 @@
 				line-height: 0;
 			}
 
-			figure img {
+			figure img,
+			figure video {
 				max-inline-size: 100%;
 			}
 
@@ -262,6 +263,8 @@ via Wikimedia Commons`;
 				complimentAudioFigcaptionP = null,
 				complimentAudioButton = null,
 				complimentAudioAudio = null,
+				complimentVideoFigure = null,
+				complimentVideoVideo = null,
 				complimentAuthor = null;
 
 			function applyCompliment(compliment) {
@@ -324,6 +327,27 @@ via Wikimedia Commons`;
 						complimentAudioButton = null;
 						complimentAudioAudio.pause();
 						complimentAudioAudio = null;
+					}
+				}
+
+				if (compliment.video) {
+					if (complimentVideoFigure === null) {
+						complimentVideoFigure = document.createElement('figure');
+						complimentVideoFigure.classList.add('video');
+						complimentVideoVideo = document.createElement('video');
+						complimentVideoVideo.controls = true;
+						complimentVideoVideo.preload = true;
+						complimentVideoFigure.append(complimentVideoVideo);
+					} else {
+						complimentVideo.remove();
+					}
+					complimentContainer.append(complimentVideoFigure);
+					complimentVideoVideo.src = compliment.video;
+				} else {
+					if (complimentVideoFigure !== null) {
+						complimentVideoFigure.remove();
+						complimentVideoFigure = null;
+						complimentVideoVideo = null;
 					}
 				}
 
