@@ -83,6 +83,7 @@
 			figure img,
 			figure video {
 				max-inline-size: 100%;
+				block-size: auto;
 			}
 
 			figure.audio {
@@ -228,9 +229,13 @@ via Wikimedia Commons`;
 				{
 					text: 'Here goes the text for a very long compliment that spans multiple lines and talks about how great NAME is.',
 					image: 'Placeholder.png',
+					imageWidth: 480,
+					imageHeight: 480,
 				},
 				{
 					image: 'Placeholder.png',
+					imageWidth: 480,
+					imageHeight: 480,
 					author: 'Test Author',
 				},
 				{
@@ -297,6 +302,8 @@ via Wikimedia Commons`;
 					}
 					complimentContainer.append(complimentImageFigure);
 					complimentImageImg.src = compliment.image;
+					updateAttribute(complimentImageImg, 'width', compliment.imageWidth);
+					updateAttribute(complimentImageImg, 'height', compliment.imageHeight);
 				} else {
 					if (complimentImageFigure !== null) {
 						complimentImageFigure.remove();
@@ -368,6 +375,14 @@ via Wikimedia Commons`;
 						complimentAuthor.remove();
 						complimentAuthor = null;
 					}
+				}
+			}
+
+			function updateAttribute(element, attribute, value) {
+				if (value !== undefined) {
+					element.setAttribute(attribute, value);
+				} else {
+					element.removeAttribute(attribute);
 				}
 			}
 
