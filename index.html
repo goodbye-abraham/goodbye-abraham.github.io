@@ -108,6 +108,10 @@
 				margin-block-end: calc((120px - 104px)/2); /* so the whole button still has the same block size */
 			}
 
+			.author {
+				font-style: italic;
+			}
+
 			footer p,
 			footer p * {
 				font-weight: normal;
@@ -354,6 +358,7 @@ via Wikimedia Commons`;
 				if (compliment.author) {
 					if (complimentAuthor === null) {
 						complimentAuthor = document.createElement('p');
+						complimentAuthor.classList.add('author');
 					} else {
 						complimentAuthor.remove();
 					}
