@@ -353,6 +353,8 @@ via Wikimedia Commons`;
 					}
 					complimentContainer.append(complimentVideoFigure);
 					complimentVideoVideo.src = compliment.video;
+					updateAttribute(complimentVideoVideo, 'width', compliment.videoWidth);
+					updateAttribute(complimentVideoVideo, 'height', compliment.videoHeight);
 				} else {
 					if (complimentVideoFigure !== null) {
 						complimentVideoFigure.remove();
