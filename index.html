@@ -175,7 +175,8 @@
 					const response = await fetch(url);
 					const { parse: { text: html } } = await response.json();
 					return html.replace(/^<p>([^]*)\n<\/p>$/, '$1').replace(/ /g, '_');
-				} catch {
+				} catch (e) {
+					console.error('Could not load picture of the day:', e);
 					return null;
 				}
 			}
@@ -211,6 +212,7 @@ via Wikimedia Commons`;
 			async function loadBackground() {
 				const fileTitle = await pictureOfTheDay();
 				if (!fileTitle) {
+					document.getElementById('attributionPictureOfTheDay').textContent = 'error';
 					return;
 				}
 
