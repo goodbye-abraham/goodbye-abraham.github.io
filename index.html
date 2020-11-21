@@ -325,6 +325,7 @@ via Wikimedia Commons`;
 						complimentAudioFigcaptionP.textContent = 'Turn up your volume and click me to listen to the compliment.';
 						complimentAudioFigcaption.append(complimentAudioFigcaptionP);
 						complimentAudioButton = document.createElement('button');
+						complimentAudioButton.title = 'Play';
 						complimentAudioButton.classList.add('play');
 						complimentAudioButton.addEventListener('click', playAudio);
 						complimentAudioFigure.append(complimentAudioFigcaption, complimentAudioButton);
