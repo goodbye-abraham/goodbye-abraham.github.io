@@ -246,6 +246,7 @@ via Wikimedia Commons`;
 				{
 					text: 'Here goes the text for a very long compliment that spans multiple lines and talks about how great NAME is.',
 					image: 'Placeholder.png',
+					imageAlt: 'Placeholder',
 					imageWidth: 480,
 					imageHeight: 480,
 				},
@@ -306,6 +307,7 @@ via Wikimedia Commons`;
 					}
 					complimentContainer.append(complimentImageFigure);
 					complimentImageImg.src = compliment.image;
+					updateAttribute(complimentImageImg, 'alt', compliment.imageAlt);
 					updateAttribute(complimentImageImg, 'width', compliment.imageWidth);
 					updateAttribute(complimentImageImg, 'height', compliment.imageHeight);
 				} else {
