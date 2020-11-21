@@ -246,12 +246,18 @@ via Wikimedia Commons`;
 				{
 					text: 'Here goes the text for a very long compliment that spans multiple lines and talks about how great NAME is.',
 					image: 'Placeholder.png',
+					imageSrcset: {
+						240: 'Placeholder-240.png',
+					},
 					imageAlt: 'Placeholder',
 					imageWidth: 480,
 					imageHeight: 480,
 				},
 				{
 					image: 'Placeholder.png',
+					imageSrcset: {
+						240: 'Placeholder-240.png',
+					},
 					imageWidth: 480,
 					imageHeight: 480,
 					author: 'Test Author',
@@ -304,9 +310,20 @@ via Wikimedia Commons`;
 						complimentImageFigure.append(complimentImageImg);
 					} else {
 						complimentImageFigure.remove();
+						complimentImageImg.srcset = '';
 					}
 					complimentContainer.append(complimentImageFigure);
 					complimentImageImg.src = compliment.image;
+					if (compliment.imageSrcset) {
+						if (compliment.imageWidth) {
+							complimentImageImg.srcset = `${compliment.image.replace(/ /g, '%20')} ${compliment.imageWidth}w`;
+							for (const [width, url] of Object.entries(compliment.imageSrcset)) {
+								complimentImageImg.srcset += `, ${url.replace(/ /g, '%20')} ${width}w`;
+							}
+						} else {
+							console.warn('Cannot use srcset without main image width');
+						}
+					}
 					updateAttribute(complimentImageImg, 'alt', compliment.imageAlt);
 					updateAttribute(complimentImageImg, 'width', compliment.imageWidth);
 					updateAttribute(complimentImageImg, 'height', compliment.imageHeight);
