@@ -227,13 +227,16 @@ via Wikimedia Commons`;
 					backgroundImg.height = height;
 				}
 				backgroundImg.src = `https://commons.wikimedia.org/wiki/Special:Redirect/file/${fileTitle}`;
-				backgroundImg.srcset = `
-					https://commons.wikimedia.org/wiki/Special:Redirect/file/${fileTitle}?width=320 320w,
-					https://commons.wikimedia.org/wiki/Special:Redirect/file/${fileTitle}?width=640 640w,
-					https://commons.wikimedia.org/wiki/Special:Redirect/file/${fileTitle}?width=800 800w,
-					https://commons.wikimedia.org/wiki/Special:Redirect/file/${fileTitle}?width=1024 1024w,
-					https://commons.wikimedia.org/wiki/Special:Redirect/file/${fileTitle}?width=1280 1280w,
-					https://commons.wikimedia.org/wiki/Special:Redirect/file/${fileTitle}?width=1920 1920w`;
+				if (width) {
+					backgroundImg.srcset = `
+						https://commons.wikimedia.org/wiki/Special:Redirect/file/${fileTitle} ${width}w,
+						https://commons.wikimedia.org/wiki/Special:Redirect/file/${fileTitle}?width=320 320w,
+						https://commons.wikimedia.org/wiki/Special:Redirect/file/${fileTitle}?width=640 640w,
+						https://commons.wikimedia.org/wiki/Special:Redirect/file/${fileTitle}?width=800 800w,
+						https://commons.wikimedia.org/wiki/Special:Redirect/file/${fileTitle}?width=1024 1024w,
+						https://commons.wikimedia.org/wiki/Special:Redirect/file/${fileTitle}?width=1280 1280w,
+						https://commons.wikimedia.org/wiki/Special:Redirect/file/${fileTitle}?width=1920 1920w`;
+				}
 				document.getElementById('attributionPictureOfTheDay').innerHTML = attributionHtml;
 			}
 
