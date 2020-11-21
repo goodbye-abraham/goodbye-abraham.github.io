@@ -16,8 +16,8 @@
 			}
 
 			#background {
-				background-size: cover;
-				background-position: center;
+				object-fit: cover;
+				object-position: center;
 				background-color: #a2a9b1; /* to avoid a glaring white while the background-image hasn’t loaded */
 				position: fixed;
 				width: 100vw; /* use vw/vh, rather than 100%, to not be affected by <body>’s scrollbar, if any */
@@ -127,7 +127,7 @@
 		</style>
 	</head>
 	<body>
-		<div id=background></div>
+		<img id=background alt="">
 		<article>
 			<main>
 				<h1>Dear NAME,</h1>
@@ -181,32 +181,36 @@
 				}
 			}
 
-			async function getAttribution(fileTitle) {
+			async function getAttributionAndSize(fileTitle) {
 				const filePage = `https://commons.wikimedia.org/wiki/File:${encodeURIComponent(fileTitle)}`;
 				const url = new URL('https://commons.wikimedia.org/w/api.php');
 				url.searchParams.set('action', 'query');
 				url.searchParams.set('titles', `File:${fileTitle}`);
 				url.searchParams.set('prop', 'imageinfo');
-				url.searchParams.set('iiprop', 'extmetadata');
+				url.searchParams.set('iiprop', ['extmetadata', 'size'].join('|'));
 				url.searchParams.set('iiextmetadatafilter', ['Artist', 'ObjectName', 'LicenseShortName', 'LicenseUrl'].join('|'));
 				url.searchParams.set('format', 'json');
 				url.searchParams.set('formatversion', '2');
 				url.searchParams.set('origin', '*');
+				let attributionHtml, width, height;
 				try {
 					const response = await fetch(url);
-					const { query: { pages: [ { imageinfo: [ { extmetadata } ] } ] } } = await response.json();
+					const { query: { pages: [ { imageinfo: [ imageinfo ] } ] } } = await response.json();
+					const { extmetadata } = imageinfo;
+					({ width, height } = imageinfo);
 					const { Artist, ObjectName, LicenseShortName, LicenseUrl } = extmetadata;
 					const license = LicenseUrl // undefined for public domain files
 						? `<a href="${LicenseUrl.value}">${LicenseShortName.value}</a>`
 						: LicenseShortName.value;
-					return `${Artist.value},
+					attributionHtml = `${Artist.value},
 <a href="${filePage}">${ObjectName.value}</a>,
 ${license},
 via Wikimedia Commons`;
 				} catch (e) {
 					console.error('Could not get proper attribution:', e);
-					return `<a href="${filePage}">${fileTitle}</a>`;
+					attributionHtml = `<a href="${filePage}">${fileTitle}</a>`;
 				}
+				return { attributionHtml, width, height };
 			}
 
 			async function loadBackground() {
@@ -216,9 +220,21 @@ via Wikimedia Commons`;
 					return;
 				}
 
-				document.getElementById('background').style.backgroundImage
-					= `url("https://commons.wikimedia.org/wiki/Special:Redirect/file/${fileTitle.replace(/"/g, '\\"')}")`;
-				document.getElementById('attributionPictureOfTheDay').innerHTML = await getAttribution(fileTitle);
+				const { attributionHtml, width, height } = await getAttributionAndSize(fileTitle);
+				const backgroundImg = document.getElementById('background');
+				if (width && height) {
+					backgroundImg.width = width;
+					backgroundImg.height = height;
+				}
+				backgroundImg.src = `https://commons.wikimedia.org/wiki/Special:Redirect/file/${fileTitle}`;
+				backgroundImg.srcset = `
+					https://commons.wikimedia.org/wiki/Special:Redirect/file/${fileTitle}?width=320 320w,
+					https://commons.wikimedia.org/wiki/Special:Redirect/file/${fileTitle}?width=640 640w,
+					https://commons.wikimedia.org/wiki/Special:Redirect/file/${fileTitle}?width=800 800w,
+					https://commons.wikimedia.org/wiki/Special:Redirect/file/${fileTitle}?width=1024 1024w,
+					https://commons.wikimedia.org/wiki/Special:Redirect/file/${fileTitle}?width=1280 1280w,
+					https://commons.wikimedia.org/wiki/Special:Redirect/file/${fileTitle}?width=1920 1920w`;
+				document.getElementById('attributionPictureOfTheDay').innerHTML = attributionHtml;
 			}
 
 			loadBackground().catch(console.error);
