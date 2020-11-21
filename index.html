@@ -187,6 +187,7 @@
 				url.searchParams.set('titles', `File:${fileTitle}`);
 				url.searchParams.set('prop', 'imageinfo');
 				url.searchParams.set('iiprop', 'extmetadata');
+				url.searchParams.set('iiextmetadatafilter', ['Artist', 'ObjectName', 'LicenseShortName', 'LicenseUrl'].join('|'));
 				url.searchParams.set('format', 'json');
 				url.searchParams.set('formatversion', '2');
 				url.searchParams.set('origin', '*');
