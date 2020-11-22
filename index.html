@@ -10,9 +10,10 @@
 			}
 
 			body {
-				margin-inline: auto; /* horizontally center the <article> */
-				max-inline-size: max-content;
-				overflow-block: auto;
+				margin-left: auto; /* horizontally center the <article> */
+				margin-right: auto;
+				max-width: max-content;
+				overflow-y: auto;
 			}
 
 			#background {
@@ -22,7 +23,8 @@
 				position: fixed;
 				width: 100vw; /* use vw/vh, rather than 100%, to not be affected by <body>’s scrollbar, if any */
 				height: 100vh;
-				inset: 0;
+				left: 0;
+				top: 0;
 				z-index: -1;
 			}
 
@@ -33,29 +35,29 @@
 				margin: 40px;
 				padding: 16px;
 				box-sizing: border-box;
-				min-block-size: calc(100vh - 2*40px); /* TODO vh with -block- doesn’t make sense (the solution would be vb but not even Firefox supports that) */
-				max-inline-size: 688px;
+				min-height: calc(100vh - 2*40px);
+				max-width: 688px;
 				background: rgba(255, 255, 255, 75%);
 			}
 
 			h1 {
-				margin-block: 0 8px;
+				margin-top: 0;
+				margin-bottom: 8px;
 				font-size: 36px;
 				line-height: 42px;
 			}
 
 			p {
-				margin-block: 0;
+				margin-top: 0;
+				margin-bottom: 0;
 				font-size: 16px;
 				line-height: 21px;
 			}
 
 			button.primary {
 				display: block;
-				margin-block: 40px;
-				margin-inline: auto;
-				padding-block: 10px;
-				padding-inline: 17px;
+				margin: 40px auto;
+				padding: 10px 17px;
 				font-size: 16px;
 				line-height: 20px;
 				color: #fff;
@@ -75,38 +77,39 @@
 
 			figure {
 				background: #fff;
-				margin-block: 24px;
-				margin-inline: 0;
+				margin: 24px 0;
 				line-height: 0;
 			}
 
 			figure img,
 			figure video {
-				max-inline-size: 100%;
-				block-size: auto;
+				max-width: 100%;
+				height: auto;
 			}
 
 			figure.audio {
-				padding-block: 24px;
+				padding-top: 24px;
+				padding-bottom: 24px;
 			}
 
 			button.play {
 				display: block;
-				inline-size: 120px;
-				block-size: 120px;
-				margin-block-start: 16px;
-				margin-inline: auto;
+				width: 120px;
+				height: 120px;
+				margin-top: 16px;
+				margin-left: auto;
+				margin-right: auto;
 				background: url("Toicon-icon-fandom-play.svg") center/100%;
 				border: none;
 				cursor: pointer;
-				transition: inline-size 50ms, block-size, margin-block-start, margin-block-end;
+				transition: width 50ms, height, margin-top, margin-bottom;
 			}
 
 			button.play:active {
-				inline-size: 104px;
-				block-size: 104px;
-				margin-block-start: calc(16px + (120px - 104px)/2);
-				margin-block-end: calc((120px - 104px)/2); /* so the whole button still has the same block size */
+				width: 104px;
+				height: 104px;
+				margin-top: calc(16px + (120px - 104px)/2);
+				margin-bottom: calc((120px - 104px)/2); /* so the whole button still has the same height */
 			}
 
 			.author {
