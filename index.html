@@ -270,6 +270,15 @@ via Wikimedia Commons`;
 					author: 'Test Recorder',
 				},
 				{
+					audio: {
+						'audio/flac': 'LL-Q188_(deu)-Sebastian_Wallroth-Beispiel.flac',
+						'audio/ogg; codecs=opus': 'LL-Q188_(deu)-Sebastian_Wallroth-Beispiel.opus',
+						'audio/ogg; codecs=vorbis': 'LL-Q188_(deu)-Sebastian_Wallroth-Beispiel.ogg',
+						'audio/mpeg': 'LL-Q188_(deu)-Sebastian_Wallroth-Beispiel.mp3',
+						'audio/x-wav': 'LL-Q188_(deu)-Sebastian_Wallroth-Beispiel.wav',
+					},
+				},
+				{
 					video: 'Chen-Gackstatter_surface.webm',
 					videoWidth: 1080,
 					videoHeight: 1080,
@@ -355,7 +364,17 @@ via Wikimedia Commons`;
 						complimentAudioFigure.remove();
 					}
 					complimentContainer.append(complimentAudioFigure);
-					complimentAudioAudio = new Audio(compliment.audio);
+					complimentAudioAudio = document.createElement('audio');
+					if (typeof compliment.audio === 'string') {
+						complimentAudioAudio.src = compliment.audio;
+					} else {
+						for (const [type, url] of Object.entries(compliment.audio)) {
+							const complimentAudioSource = document.createElement('source');
+							complimentAudioSource.src = url;
+							complimentAudioSource.type = type;
+							complimentAudioAudio.append(complimentAudioSource);
+						}
+					}
 				} else {
 					if (complimentAudioFigure !== null) {
 						complimentAudioFigure.remove();
