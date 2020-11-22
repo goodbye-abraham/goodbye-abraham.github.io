@@ -396,9 +396,20 @@ via Wikimedia Commons`;
 						complimentVideoFigure.append(complimentVideoVideo);
 					} else {
 						complimentVideoFigure.remove();
+						complimentVideoVideo.removeAttribute('src');
+						complimentVideoVideo.textContent = ''; // remove <source> children
 					}
 					complimentContainer.append(complimentVideoFigure);
-					complimentVideoVideo.src = compliment.video;
+					if (typeof compliment.video === 'string') {
+						complimentVideoVideo.src = compliment.video;
+					} else {
+						for (const [type, url] of Object.entries(compliment.video)) {
+							const complimentVideoSource = document.createElement('source');
+							complimentVideoSource.src = url;
+							complimentVideoSource.type = type;
+							complimentVideoVideo.append(complimentVideoSource);
+						}
+					}
 					updateAttribute(complimentVideoVideo, 'width', compliment.videoWidth);
 					updateAttribute(complimentVideoVideo, 'height', compliment.videoHeight);
 				} else {
