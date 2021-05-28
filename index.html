@@ -1,7 +1,7 @@
 <!DOCTYPE html>
-<html lang=en dir=ltr>
+<html lang=de dir=ltr>
 	<head>
-		<title>Compliments Button</title>
+		<title>Abschied von Abraham</title>
 		<meta charset=utf-8>
 		<style>
 			* {
@@ -134,12 +134,15 @@
 		<img id=background alt="">
 		<article>
 			<main>
-				<h1>Dear NAME,</h1>
+				<h1>Lieber Abraham,</h1>
 				<p>
-					have a compliment!
+					für die Momente, in denen dich die Sehnsucht nach der guten alten Zeit bei Wikimedia packt,
+					haben wir hier einen Vorrat lieber Grüße und Erinnerungen angelegt.
+					Wann immer dir danach ist, drück unten auf den Knopf
+					und du bekommst einen lieben Gruß von haupt- oder ehrenamtlichen Wikimedianer*innen!
 				</p>
 				<button type=button id=complimentButton class=primary>
-					Get a compliment
+					Gruß bekommen
 				</button>
 				<blockquote id=complimentContainer>
 					<!-- filled by JavaScript -->
@@ -147,11 +150,11 @@
 			</main>
 			<footer>
 				<p>
-					Background image:
-					<span id=attributionPictureOfTheDay>loading…</span>
+					Hintergrundbild:
+					<span id=attributionPictureOfTheDay lang=en>loading…</span>
 				</p>
 				<p>
-					Play button:
+					Play-Button:
 					Carol Liao/toicon.com,
 					<a href="https://commons.wikimedia.org/wiki/File:Toicon-icon-fandom-play.svg">Toicon-icon-fandom-play.svg</a>,
 					<a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>,
@@ -246,55 +249,258 @@ via Wikimedia Commons`;
 
 			loadBackground().catch(console.error);
 
+			const en = { // mixin
+				textLang: 'en',
+				authorLang: 'en',
+			};
+
 			const compliments = [
 				{
-					text: 'Here goes the text for a short compliment.',
+					text: 'Lieber Abraham,\nauch wenn wir nie direkt zusammengearbeitet haben, war es immer schön mit dir auf dem Flur oder auch in meinem Büro zu reden. Du konntest mir immer ein Lächeln auf die Lippen zaubern und ich habe es immer sehr genossen, wenn du mir im Büro Gesellschaft geleistet hast. Du wirst sehr fehlen bei Wikimedia! Sieben Jahre waren wir Kollegen und ich hoffe sehr auf ein weiteres gemeinsames Bierchen außerhalb der Arbeit.\nIch wünsche dir alles nur erdenklich Gute für die Zukunft und vor allem mehr Zeit für dich und deine Liebsten!',
+					author: 'Eileen',
 				},
 				{
-					text: 'Dies ist der Text für ein kurzes Kompliment',
-					textLang: 'de',
-					author: 'Verfasser',
+					text: 'Danke für deinen unermüdlichen Einsatz für die Völkerverständigung!',
+					author: 'Nicole',
+					image: 'IMG_20181005_164931 - Nicole Ebber.jpg',
+					imageWidth: 4608,
+					imageHeight: 3456,
+				},
+				{
+					text: 'Hi Fans! On our way to Wikimania 2014. ',
+					author: 'Nicole',
 					authorLang: 'de',
+					image: 'IMG_20140805_142059 - Nicole Ebber.jpg',
+					imageWidth: 1280,
+					imageHeight: 960,
+					...en,
 				},
 				{
-					text: 'Here goes the text for a very long compliment that spans multiple lines and talks about how great NAME is.',
-					image: 'Placeholder.png',
-					imageSrcset: {
-						240: 'Placeholder-240.png',
+					text: 'Your contributions to this organization have been enormous and phenomenal. Best wishes for your future endeavors.',
+					author: 'Amy',
+					...en,
+				},
+				{
+					text: 'Lieber Abraham,\ndanke für eine gute Zeit mit dir als Teamlead. Mit dir als Chef hatte ich das erste Mal in meiner beruflichen Laufbahn das Gefühl, nicht um Anerkennung kämpfen zu müssen. Ich habe das erste Mal eine Gehaltserhöhung bekommen, ohne danach gefragt zu haben. Ich hatte das Gefühl, du hast meine Qualitäten immer klar gesehen. Und wenn auch im alltäglichen Arbeiten oft wenig Raum für Wertschätzung war, gab es diese zumindest immer im Jahresgespräch. Aus diesen Gesprächen bin ich immer mit einem guten Gefühl rausgegangen, gesehen zu werden für das, was ich bin und mitbringe. Vielen Dank dafür und alles Gute für deinen weiteren Weg.',
+					author: 'Julia',
+				},
+				{
+					text: 'Lieber Abraham, du warst echt der beste "Chef" den ich je hatte! So viel Menschlichkeit, auch im Umgang mit schwierigen Themen und so viel Lässigkeit bei absoluter Souveränität habe ich noch nicht erlebt. Du wirst mir hier zwar fehlen, aber deinem Herz folgen zu dürfen und mehr Zeit und Energie für dich zu haben, hast du dir absolut verdient! Mach\'s gut <3',
+					author: 'Jan J.',
+				},
+				{
+					text: 'Lieber Abraham,\n\nobwohl wir die letzten Jahre nicht mehr viel miteinander zu tun hatten, hat es mich doch immer gefreut wenn wir uns auf dem Flur begegnet sind und ein paar kurze Worte miteinander wechseln konnten.\n\nIch möchte mich vor allem bei dir für dein mir entgegengebrachtes Vertrauen bedanken. Du hast mich damals als Praktikantin für UX-Design angestellt und mir somit den Weg in die Design-Karriere geebnet. Daran werde ich immer denken. Wer weiß, was ich heute sonst machen würde, wenn nicht Wikidata jeden Tag ein Stück benutzer*innen freundlicher machen :)\n\nIch finde es sehr Schade zu sehen, dass du gehst, aber kann deine Entscheidung auch gut verstehen. Ich bin mir sicher, egal wo es dich hinverschlägt, wirst du weiter großartige Dinge tun und anderen Menschen auf verschiedenen Arten und Weisen helfen zu wachsen.\n\nAlles alles Gute!\n\nPS: anbei das Bild dass ich dir damals schon zum Abschied aus der SWE geschickt habe. Passt hier auch sehr gut :)',
+					author: 'Charlie',
+					image: 'DSC_0021 - Charlie Kritschmar.JPG',
+					imageWidth: 5333,
+					imageHeight: 3000,
+				},
+				{
+					text: 'Von deinem (letzten) Vorstandsteam',
+					author: 'Moritz',
+					image: 'Foto Abraham Vorstandsteam_Text - Moritz Rahm.jpg',
+					imageWidth: 1024,
+					imageHeight: 457,
+				},
+				{
+					text: 'Alles Gute!',
+					author: 'Dein Vorstandsteam (anno 2019)',
+					image: 'Vorstandsteam 2019 - Julia Kirchner.JPG',
+					imageWidth: 6000,
+					imageHeight: 4000,
+				},
+				{
+					text: 'Vielen Dank für deinen Einsatz für eine gute User Experience unserer Produkte!',
+					author: 'Jan',
+				},
+				{
+					text: 'Lieber Abraham,\n\nwusstest du eigentlich, dass wir (Elisabeth, Corinna und Annika) dich früher, in den guten alten MV-Zeiten immer “Papa Abraham” genannt haben? :) Nein? Na dann schenken wir dir dieses “Geheimnis” und das entsprechende Foto dazu doch gerne zum Abschied…\n\nDeine erste MV war auch meine erste MV (Bamberg...was ein Stress alles!), aber mit niemand anderem hätte ich den ganzen MV-Wahnsinn lieber gemacht, als mit dir!\nDeine freundliche und unkomplizierte Art war vor allem in schwierigen Momenten sehr hilfreich und du hast uns immer das Gefühl gegeben, dass wir für alle Probleme gemeinsam eine Lösung finden. Ganz “Papa-Style” halt!\n\nDie 22. MV im ZKM in Karlsruhe war meine persönliche Lieblings-MV mit dir. Den schönen Überraschungsmoment auf dem Aussichtsturm hattest du dir voll verdient und daran werde ich immer gerne zurückdenken. :)\n\nLeider haben wir es nicht mehr geschafft, die Idee mit unserem Wiki-Bus in deiner Amtszeit umzusetzen. Aber wenn der mal am Start sein sollte, bekommst du auf jeden Fall einen VIP-Ehrenplatz.\n\nGanz herzlichen Dank für die tolle Zusammenarbeit und alles Gute für dich, lieber Abraham!',
+					author: 'Annika und Corinna',
+					image: 'Papa Abraham und wir - Annika Möller.jpg',
+					imageWidth: 1200,
+					imageHeight: 1600,
+				},
+				{
+					image: 'Team Personal-Abraham.png',
+					imageWidth: 3000,
+					imageHeight: 1688,
+				},
+				{
+					text: 'Lieber Abraham, ich erinnere mich noch daran, wie wir auf Deck der MS Wissenschaft über meine bevorstehende Iran-Reise gequatscht haben (was übrigens nach wie vor mein spannendster und tollster Urlaub war) und zack sind sechs Jahre ins Land gegangen, davon 4 mit dir als Vorstand! Wir als WMDE konnten in den letzten Jahren viel bewirken und sind in vielerlei Hinsicht zu einem starken und ernstzunehmenden Akteur gewachsen (ich kann dies vor allem für den Bereich Open Science sagen, wo wir 2016 kaum bekannt waren, inzwischen jedoch starker Teil der Community)und das ist auch dein Verdienst. Danke für deine Leidenschaft und dafür, dass du immer ansprechbar warst obwohl dein Terminkalender sicher immer voll war! Ich habe immer gern mit dir zusammengearbeitet und wünsche dir alles Gute für die Zukunft!',
+					author: 'Chris',
+				},
+				{
+					text: 'Danke für das Unterstützen von Wandel in der ganzen Organisation wie im persönlichen Bereich: Denn was bleibt, ist die Veränderung, was sich verändert, bleibt.',
+					author: 'Carsten',
+				},
+				{
+					text: 'Schöne Erinnerung an einen anderen Abschied. Gute Crowd, gutes Essen, Rock\'n\'Roll!',
+					author: 'Nicole',
+					image: 'IMG_20181201_223338 (1) - Nicole Ebber.jpg',
+					imageWidth: 4608,
+					imageHeight: 3456,
+				},
+				{
+					text: 'Lieber Abraham, so entspannt wie ich Dich bei der letzten MV auf diesem Bild erwischt habe, möchte ich Dich in Erinnerung behalten. Hab Dank für Dein Vertrauen, Deine Freiheit und die vielen Gespräche! Und genieße die Zeit des Übergangs! Bleib so entspannt :-)',
+					author: 'Maiken',
+					image: 'IMG_20200621_152655__01 - Maiken Hagemeister.jpg',
+					imageWidth: 1292,
+					imageHeight: 1615,
+				},
+				{
+					text: 'Rapraham, es war mir eine Ehre. Nein, sogar ein innerliches Hundewelpenstreicheln. Bleib wie du bist und allet wird jut.',
+					author: 'Philipp',
+				},
+				{
+					text: 'Hallo Abraham! Alles Gute für die Zukunft wünscht Dir der Duschgeldrache2 aus dem (leider) noch geschlossenen Lokal K.',
+					author: 'Duschgeldrache2',
+				},
+				{
+					text: 'Tausend Dank dafür, dass du seit Tag 1 an das Thema Movement und Wikimedia 2030 geglaubt hast und mich bei jedem Schritt und noch so waghalsigem Kommando voll unterstützt und gestärkt hast.',
+					author: 'Nicole',
+					image: 'IMG_20190920_144100_432 - Nicole Ebber.jpg',
+					imageWidth: 1280,
+					imageHeight: 853,
+				},
+				{
+					text: 'Thank you, Abraham, for leading this organization to it\'s very best. Although we didn\'t get to work together a lot, I was always impressed at what you achieved, and I wish you the best of luck in whatever the future may hold.',
+					author: 'Itamar',
+					...en,
+				},
+				{
+					text: 'Hey Abraham, I\'ve been working here for 2 years now and since then your leadership and messages were really inspiring to me as a student. Also during the pandemic your approach to flexibility and making people take care of family first was really important to me and I assume for others as well, for all of these reasons I will remember your leadership as a model also maybe for myself in the future in my personal life. All the best luck for your future endeavours and thank you so much!',
+					author: 'Erdi',
+					...en,
+				},
+				{
+					text: 'Lieber Abraham, Danke für die Überzeugungsarbeit!',
+					author: 'Matti/MB-one',
+				},
+				{
+					text: 'Lieber Abraham!\n\nDu warst nicht nur ein großartiger Vorstand sondern einmal auch der beste Eismann. <3\n\nIch habe mich sehr gefreut so lange zusammen mit dir für Wikimedia tätig sein zu können und danke dir für deine so nahbare und immer faire und verständnisvolle Art, die mir oft ins Bewusstsein gerufen hat, in einem wirklich tollen Verein zu arbeiten.\n\nIch wünsche dir von Herzen alles Gute!',
+					author: 'Nico R.',
+					image: '20190613_133907 - Nicolas Rück.jpg',
+					imageWidth: 1253,
+					imageHeight: 467,
+				},
+				{
+					text: 'Abschiedsgruß nur für die Funktion, ich hoffe, wir sehen/lesen uns in der großen Wikipedia/Wikimedia-Welt immer mal wieder. Alles Gute für den neuen Lebensabschnitt, bleib vor allem gesund und bewahre Dir allzeit Deine positive Lebenseinstellung! Viele Grüße, Gerhard aka Perrak',
+					author: 'Perrak',
+				},
+				{
+					text: 'Lieber Abraham, vielen Dank für die gemeinsame Zeit bei WMDE mit dir, es war mir ein Vergnügen! Für deinen weiteren Lebensweg alles erdenklich Gute und bleibe gesund, heiter und neugierig auf die Welt und die Menschen da draußen !',
+					author: 'Holger',
+				},
+				{
+					text: 'Lieber Abraham, wir sind uns pandemiebedingt leider nur ein, zwei Mal persönlich begegnet (ich erinnere mich daran, wie wir letztes Jahr auf einem Videodreh für Schnittbilder posieren mussten). Wie schade! Danke dir für die immer wunderbare Zusammenarbeit bei Pressemitteilungen und -zitaten. Für deine Zukunft wünsche ich dir alles, alles Gute!',
+					author: 'Frank',
+				},
+				{
+					text: '~Ahoi~ Ohai Abraham, irgendwann werde ich es auch noch mal in das Schloss in Karlsruhe schaffen und mir die Unterdrückung der Badenser durch die Schwaben anschauen. Sonst kann ich nur sagen, dass ich sehr froh bin, dass du kein Teppich verkaufender Bazaari geworden, sondern 2012 bei WMDE gelandet bist :)\nIch werde dich hier vermissen und hoffe, dass ich dich auch in Zukunft trotzdem noch ab und an sehe.',
+					author: 'Merle',
+				},
+				{
+					text: 'Bierchen! Strategen unter sich.',
+					author: 'Nicole',
+					image: 'IMG_20190814_202311 - Nicole Ebber.jpg',
+					imageWidth: 4608,
+					imageHeight: 3456,
+				},
+				{
+					text: 'Lieber Abraham,\nauch wenn unsere gemeinsame Zeit bei Wikimedia nicht besonders lang war, habe ich mich wirklich sehr gefreut mit dir zu arbeiten. Ein ganz besonderes Highlight ist da natürlich unser virtuelles Winterfest 2020. Es war schön, das Gespräch mit dir zu führen und auch die Zusammenarbeit rund um Events war immer gut.\n\nIch wünsche dir alles erdenklich Gute für deine Zukunft und ich bin sehr gespannt zu sehen, wie und wo es für dich weitergeht.\n\nViele liebe Grüße und alles Gute',
+					author: 'Sarah Skavron',
+					image: 'IMG-20201217-WA0008(1) - Sarah Skavron.jpg',
+					imageHeight: 1600,
+					imageWidth: 900,
+				},
+				{
+					text: 'Lieber Abraham, wir haben uns - pandemiebedingt - wenig gesehen und kaum kennen gelernt. Wie schade! Ich wünsche Dir für Deinen jetzt bevorstehenden neuen Lebensabschnitt alle Gute und viel Freude.',
+					author: 'Heike',
+				},
+				{
+					text: 'Lieber Abraham,\ndamals, bei meinem zweiten Vorstellungsgespräch bei Wikimedia warst du dabei. Bis heute weiß ich zwar nicht, was damals deine Meinung war, nehme aber an, dass sie positiv war. In all dem Jahren habe ich dich immer als unheimlich wertschätzend erlebt und hätte mir gewünscht, dass du Wikimedia noch länger erhalten bleibst. Deine Ideen, deine Integrität und Begeisterung für das next big thing werden fehlen. Ich wünsche dir eine erholsame Auszeit und die gleiche Begeisterung für alles, was danach kommt.',
+					author: 'Verena',
+				},
+				{
+					text: 'Danke Abraham für unsere Zeit, für deinen Spirit, für deine Hands On-Mentalität, für deine Menschlichkeit, deine Offenheit, deine Unterstützung, dein Engagement, deine Kollegialität und dein Vertrauen!\n\nWir haben wirklich super zusammengearbeitet, wir waren erfolgreich, wir waren zielorientiert und das wichtigste von allem:  Wir hatten Spaß. Du hast unsere Werte und Kultur bei Wikimedia hochgehalten, weil du sie mitgeformt hast, du hast für einen Arbeitsgeist auf einer gemeinsamen Ebene gesorgt, weil du selber auf dieser Ebene gearbeitet hast. Du warst weniger Chef und mehr Kollege. Genau das finde ich wertvoll, weil es ein Arbeitsumfeld erzeugt, in dem ich arbeiten möchte.\n\nSchön, dass wir die gemeinsame Zeit hatten.\n\nMan sieht sich immer zwei Mal. Das letzte Bier ist noch nicht getrunken und wir müssen einiges noch nachfeiern! Ich freue mich darauf.',
+					author: 'Till',
+				},
+				{
+					text: 'Beste Bürogemeinschaft ebber!',
+					author: 'Nicole',
+					image: 'IMG_20140827_111053 - Nicole Ebber.jpg',
+					imageWidth: 2448,
+					imageHeight: 2448,
+				},
+				{
+					text: 'Abraham! Danke für die legendären Zugfahrten nach Hannover, Braunschweig und weitere Metropolen dieser Welt im Boardbistro der Deutschen Bahn. Danke für die vielen kreativen Vorbereitungssessions zu den Präsidiumssitzungen mit Whiteboards, hunderten Post-Its, dem Designen "als Erlebnis" - denn das war\'s tatsächlich und wie oft sind die Präsidiumsmitglieder und wir super motiviert am Sonntag nach Hause gefahren! Bis heute wird noch von "der Strategiewerkstatt, damals in Potsdam am HPI" gesprochen und das zu Recht. Ein weiteres highlight: die unmittelbare, stundenlange Nachbereitung der Sitzungen bis oft tief in die Nacht. Es hat riesigen Spaß gemacht mit dir zu arbeiten und ich hab immens viel gelernt. Neben alldem, was du "für WMDE geleistet" hast bist du einfach ein super angenehmer und inspirierender Typ, immer optimistisch und mit Blick nach vorne gerichtet, andere mitreißend und super geduldig, wo andere schon längst die Contenance verloren hätten. Ich freu mich drauf, mit dir auch die nächsten Jahre noch öfter mal anzustoßen und Zeit zu verbringen. Moritz',
+					author: 'Moritz',
+				},
+				{
+					text: 'Lieber Abraham, wir halten es mit deinem Lieblingsspruch: „Steht im GS-Wiki!“ ;-) Alles Liebe und Gute für deine Zukunft!',
+					author: 'Martin und Sandro',
+					image: 'Berlin_MV_WMDE_2017_22 - Sandro Halank.jpg',
+					imageWidth: 6000,
+					imageHeight: 4000,
+				},
+				{
+					text: 'Dear Abraham! I still remember the day where I learned that I got my dream job in the Software Department of WMDE. I was staring at my phone the whole day, and suddenly I have a call from WMDE! It was you and Lydia on the phone, announcing that I would become the Community Communication Manager for Wikidata, and that I was expected in the office in Berlin asap :) You two were so nice and I felt immediately excited and welcome. This memory is still until now one of my favorites. Since then, we had a lot of adventures, from the first WikidataCon to the most difficult times we had to go through recently, but I always had the feeling of being supported, trusted and protected by our head of department, then head of the organization. Your kindness and dedication will be missed. Good luck for your new adventures!',
+					textLang: 'en',
+					author: 'Léa Lacroix',
+					authorLang: 'fr',
+				},
+				{
+					text: 'Danke für Deinen Humor, aber auch Deine Ernsthaftigkeit zum richtigen Zeitpunkt.Nicht nur als Eis-Dealer hast Du Dich in den Dienst des Kollegiums gestellt und neue Perspektiven eröffnet.',
+					author: 'Vera',
+					image: 'Eisdealer fürs Kollegium - Vera Krick.jpg',
+					imageWidth: 1193,
+					imageHeight: 1512,
+				},
+				{
+					text: 'Lieber Abraham, du bist der Grund, dass ich WMDE überhaupt erst kennen lernte und hast mich eingestellt. Vielen vielen Dank für die Einführung in diese wundervolle Wikiwelt! Ich bin mir sicher, dass wir uns auch in Zukunft über den Weg laufen werden und bin schon sehr gespannt auf deine nächsten Abenteuer. Alles Gute dir!',
+					author: 'Lea',
+				},
+				{
+					text: 'Lieber Abraham, es hat mich sehr gefreut, mit dir virtuell zu arbeiten und vor allem rund um den Wikipedia Geburtstag so viel Pressearbeit zu machen. Es war immer sehr angenehm, mit dir Presseanfragen zu bearbeiten, weil ich dich immer als sehr offen gegenüber meinem Rat und meinen Vorschlägen erlebt habe. Und weil du immer mit einer so angenehmen, sympathischen Persönlichkeit unterwegs bist! Alles Gute weiterhin und man sieht sich ja immer zweimal im Leben ;-) Deine Julia',
+					author: 'Julia Gebert',
+					image: 'Bildschirmfoto vom 2021-05-17 11-01-21 - Julia Gebert.png',
+					imageWidth: 578,
+					imageHeight: 434,
+				},
+				{
+					text: 'Lieber Abraham,\n\n\ndanke für dein offenes Ohr, wann immer ich es brauchte.\n\nViel Freude und Neugier bei deinen kommenden Aktivitäten. Ich bin gespannt wo es dich hinverschlägt und wünsche dir dabei alles Gute!',
+					author: 'Elly',
+					image: '399px-Zugang_gestalten_2018_(151) - Elly Koepf.jpg',
+					imageWidth: 399,
+					imageHeight: 599,
+				},
+				{
+					video: {
+						'video/mp4': 'Video von Johanna.mp4',
+						'video/webm': 'Video von Johanna.webm',
 					},
-					imageAlt: 'Placeholder',
-					imageWidth: 480,
-					imageHeight: 480,
+					videoWidth: 480,
+					videoHeight: 848,
 				},
 				{
-					text: 'Here is a compliment with explicit line breaks.\n\nHere is some more text after the line breaks.',
+					text: 'Dein "Vorzimmer" im Dezember 2016.',
+					image: 'IMG_5583.jpg',
+					imageWidth: 3264,
+					imageHeight: 2448,
 				},
 				{
-					image: 'Placeholder.png',
-					imageSrcset: {
-						240: 'Placeholder-240.png',
-					},
-					imageWidth: 480,
-					imageHeight: 480,
-					author: 'Test Author',
+					text: 'Abraham ich, Günter alias BotBln, möchte Dir persönlich danken. Vieles das ich in den letzten Jahren erleben durfte, wäre ohne Dein Wirken nicht möglich gewesen. Immer mit Begeisterung für uns Freiwillige. Immer zuhören, reflektieren und dann handeln. Das zeichnet Dich persönlich aus. Mit soviel Ruhe in den Stürmen der Wikipedianer zu agieren das muss Dir nun erst jemand gleichtun.',
+					author: 'Günter alias BotBln',
+					image: '0001 - Sandro Halank.jpg',
+					imageWidth: 6485,
+					imageHeight: 5446,
 				},
 				{
-					audio: 'LL-Q188_(deu)-Sebastian_Wallroth-Beispiel.wav',
-					author: 'Test Recorder',
-				},
-				{
-					audio: {
-						'audio/flac': 'LL-Q188_(deu)-Sebastian_Wallroth-Beispiel.flac',
-						'audio/ogg; codecs=opus': 'LL-Q188_(deu)-Sebastian_Wallroth-Beispiel.opus',
-						'audio/ogg; codecs=vorbis': 'LL-Q188_(deu)-Sebastian_Wallroth-Beispiel.ogg',
-						'audio/mpeg': 'LL-Q188_(deu)-Sebastian_Wallroth-Beispiel.mp3',
-						'audio/x-wav': 'LL-Q188_(deu)-Sebastian_Wallroth-Beispiel.wav',
-					},
-				},
-				{
-					video: 'Chen-Gackstatter_surface.webm',
-					videoWidth: 1080,
-					videoHeight: 1080,
+					text: 'Danke für deine Inspiration – zu jeder Zeit, an jedem Ort!',
+					author: 'Nicole',
+					image: 'IMG_20190818_012034 - Nicole Ebber.jpg',
+					imageWidth: 3456,
+					imageHeight: 4608,
 				},
 			];
 
@@ -368,7 +574,7 @@ via Wikimedia Commons`;
 						complimentAudioFigure.classList.add('audio');
 						complimentAudioFigcaption = document.createElement('figcaption');
 						complimentAudioFigcaptionP = document.createElement('p');
-						complimentAudioFigcaptionP.textContent = 'Turn up your volume and click me to listen to the compliment.';
+						complimentAudioFigcaptionP.textContent = 'Dreh die Lautstärke auf und hör dir den Gruß an.';
 						complimentAudioFigcaption.append(complimentAudioFigcaptionP);
 						complimentAudioButton = document.createElement('button');
 						complimentAudioButton.title = 'Play';
