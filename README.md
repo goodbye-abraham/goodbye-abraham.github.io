@@ -25,7 +25,7 @@ but the following sections also document the possible compliment options in more
 ### Text compliments
 
 The `text` option adds a piece of plain text to the compliment.
-(No kind of markup is supported.)
+(Line breaks in the input are preserved, but no other kind of markup is supported.)
 Optionally, the `textLang` and `textDir` options can be used to set different [`lang=`][lang] and [`dir=` attributes][dir] for the element containing the text,
 allowing you to include compliments in different languages in the same compliments button.
 (The surrounding document is marked as being in English and left-to-right, though you’re free to change that, of course.)
